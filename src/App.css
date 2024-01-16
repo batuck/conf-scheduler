@@ -1,0 +1,59 @@
+/* ConferenceRoomBookingScreen.css */
+
+body {
+  margin: 0;
+}
+
+.conference-room-booking-screen {
+  min-height: 100vh;
+  background-image: url('background-image.jpg'); /* Replace with your background image URL */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 60%; /* Adjust the width as needed */
+  margin: 20px auto;
+  text-align: center;
+  color: white; /* Set text color to white */
+}
+
+h2 {
+  color: black; /* Set header text color to black */
+}
+
+.current-day {
+  text-align: center;
+  color: white; /* Set text color to white */
+}
+
+.time-picker-section {
+  text-align: center;
+}
+
+.current-day-time {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.time-selectors {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-selector {
+  margin: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
