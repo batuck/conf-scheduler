@@ -74,11 +74,12 @@ const ConferenceRoomBookingScreen = () => {
 
   const checkBooking = async () => {
     try {
-      const bookingDTO = new BookingDTO(startTime, endTime, headcount);
+      const bookingDTO = new BookingDTO(startTime, endTime, headcount,isCreate);
       const combinedStartDate = combineDateTime(currentDate, startTime);
       const combinedEndDate = combineDateTime(currentDate, endTime);
       bookingDTO.startDateTime = combinedStartDate;
       bookingDTO.endDateTime = combinedEndDate;
+      
 
   
       const response = await fetch('https://conference-scheduler.onrender.com/api/bookings/check', {
