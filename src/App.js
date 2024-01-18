@@ -91,34 +91,13 @@ const ConferenceRoomBookingScreen = () => {
   
       const result = await response.text();
       console.log(result);
+      alert(result);
     } catch (error) {
       console.error('Error checking booking:', error);
     }
   };
   
-  const createBooking = async () => {
-    try {
-      const bookingDTO = new BookingDTO(startTime, endTime, headcount);
-      const combinedStartDate = combineDateTime(currentDate, startTime);
-      const combinedEndDate = combineDateTime(currentDate, endTime);
-      bookingDTO.startDateTime = combinedStartDate;
-      bookingDTO.endDateTime = combinedEndDate;
-  
-      const response = await fetch('https://conference-room-9a568e8b37a2.herokuapp.com/api/bookings/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingDTO),
-      });
-  
-      const result = await response.text();
-      console.log(result);
-    } catch (error) {
-      console.error('Error creating booking:', error);
-    }
-  };
-  
+
   const combineDateTime = (date, time) => {
     const [hours, minutes] = time.split('.').map(Number);
     const combinedDate = new Date(date);
