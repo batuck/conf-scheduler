@@ -81,7 +81,7 @@ const ConferenceRoomBookingScreen = () => {
       bookingDTO.endDateTime = combinedEndDate;
 
   
-      const response = await fetch('https://conference-room-9a568e8b37a2.herokuapp.com/api/bookings/check', {
+      const response = await fetch('https://conference-scheduler.onrender.com/api/bookings/check', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
