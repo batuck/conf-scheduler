@@ -159,9 +159,6 @@ const ConferenceRoomBookingScreen = () => {
             <button onClick={checkBooking} disabled={!isBookingEnabled}>
               Check Booking
             </button>
-            <button onClick={createBooking} disabled={!isBookingEnabled}>
-              Create Booking
-            </button>
           </div>
         </div>
       </div>
