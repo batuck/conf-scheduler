@@ -1,5 +1,5 @@
-// BookingDto.js
-class BookingDto {
+// BookingDTO.js
+class BookingDTO {
     constructor(startDateTime, endDateTime, headcount,isCreate) {
       this.startDateTime = startDateTime;
       this.endDateTime = endDateTime;
@@ -8,5 +8,5 @@ class BookingDto {
     }
   }
   
-  export default BookingDto;
+  export default BookingDTO;
   

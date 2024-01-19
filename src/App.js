@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import BookingDto from './BookingDto';
+import BookingDTO from './BookingDTO';
 import './App.css'; // Import your CSS file for styling
 
 const ConferenceRoomBookingScreen = () => {
