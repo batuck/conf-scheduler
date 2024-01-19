@@ -80,7 +80,7 @@ const ConferenceRoomBookingScreen = () => {
 
   const checkBooking = async () => {
     try {
-      const bookingDTO = new BookingDto(startTime, endTime, headcount, false); // Set isCreate to false initially
+      const bookingDTO = new BookingDTO(startTime, endTime, headcount, false); // Set isCreate to false initially
       const combinedStartDate = combineDateTime(currentDate, startTime);
       const combinedEndDate = combineDateTime(currentDate, endTime);
       bookingDTO.startDateTime = combinedStartDate;
@@ -118,7 +118,7 @@ const ConferenceRoomBookingScreen = () => {
 
   const createBooking = async () => {
     try {
-      const bookingDTO = new BookingDto(startTime, endTime, headcount,true);
+      const bookingDTO = new BookingDTO(startTime, endTime, headcount,true);
       const combinedStartDate = combineDateTime(currentDate, startTime);
       const combinedEndDate = combineDateTime(currentDate, endTime);
       bookingDTO.startDateTime = combinedStartDate;
