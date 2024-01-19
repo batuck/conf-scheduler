@@ -1,7 +1,5 @@
-// ConferenceRoomBookingScreen.js
-
 import React, { useState, useCallback } from 'react';
-import BookingDTO from './BookingDTO';
+import BookingDto from './BookingDto';
 import './App.css'; // Import your CSS file for styling
 
 const ConferenceRoomBookingScreen = () => {
@@ -9,6 +7,7 @@ const ConferenceRoomBookingScreen = () => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [headcount, setHeadcount] = useState('');
+  const [isRoomAvailable, setIsRoomAvailable] = useState(false);
 
   const setStartTimeOptions = useCallback(() => {
     const currentHour = new Date().getHours();
@@ -70,18 +69,23 @@ const ConferenceRoomBookingScreen = () => {
     setHeadcount(newHeadcount);
   };
 
+  const resetFields = () => {
+    setStartTime('');
+    setEndTime('');
+    setHeadcount('');
+    setIsRoomAvailable(false);
+  };
+
   const isBookingEnabled = startTime && endTime && headcount;
 
   const checkBooking = async () => {
     try {
-      const bookingDTO = new BookingDTO(startTime, endTime, headcount,isCreate);
+      const bookingDTO = new BookingDto(startTime, endTime, headcount, false); // Set isCreate to false initially
       const combinedStartDate = combineDateTime(currentDate, startTime);
       const combinedEndDate = combineDateTime(currentDate, endTime);
       bookingDTO.startDateTime = combinedStartDate;
       bookingDTO.endDateTime = combinedEndDate;
-      
 
-  
       const response = await fetch('https://conference-scheduler.onrender.com/api/bookings/check', {
         method: 'POST',
         headers: {
@@ -89,27 +93,69 @@ const ConferenceRoomBookingScreen = () => {
         },
         body: JSON.stringify(bookingDTO),
       });
-  
-      const result = await response.text();
+
+      const result = await response.json(); // Assuming the response is in JSON format
       console.log(result);
-      alert(result);
+      
+
+      // Modify the response to include isRoomAvailable and a message
+      const { roomAvailable, message } = result;
+      
+      setIsRoomAvailable(roomAvailable);
+    
+      if (roomAvailable) {
+        alert(message);
+        console.log('Room is available:', message);
+      
+      } else {
+        alert(message);
+        console.log('Room is not available:', message);
+      }
     } catch (error) {
       console.error('Error checking booking:', error);
     }
   };
-  
+
+  const createBooking = async () => {
+    try {
+      const bookingDTO = new BookingDto(startTime, endTime, headcount,true);
+      const combinedStartDate = combineDateTime(currentDate, startTime);
+      const combinedEndDate = combineDateTime(currentDate, endTime);
+      bookingDTO.startDateTime = combinedStartDate;
+      bookingDTO.endDateTime = combinedEndDate;
+
+      const response = await fetch('https://conference-scheduler.onrender.com/api/bookings/check', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingDTO),
+      });
+
+      const result = await response.json();
+      console.log(result);
+      console.log(result.message);
+
+      const { message } = result;
+      alert(message);
+      resetFields();
+    } catch (error) {
+      console.error('Error creating booking:', error);
+    }
+  };
 
   const combineDateTime = (date, time) => {
     const [hours, minutes] = time.split('.').map(Number);
     const combinedDate = new Date(date);
     combinedDate.setHours(hours, minutes, 0, 0);
-  
+
     // Adjust the combined date-time to the desired time zone or offset
     const timeZoneOffsetInMinutes = combinedDate.getTimezoneOffset();
     const adjustedDate = new Date(combinedDate.getTime() - timeZoneOffsetInMinutes * 60000);
-  
+
     return adjustedDate.toISOString();
   };
+
 
   return (
     <div className="conference-room-booking-screen">
@@ -148,7 +194,7 @@ const ConferenceRoomBookingScreen = () => {
           </div>
           <div className="headcount-section">
             <h2 style={{ color: 'black' }}>Headcount</h2>
-            
+
             <input
               type="number"
               value={headcount}
@@ -159,6 +205,9 @@ const ConferenceRoomBookingScreen = () => {
           <div className="button-section">
             <button onClick={checkBooking} disabled={!isBookingEnabled}>
               Check Booking
+            </button>
+            <button onClick={createBooking} disabled={!isRoomAvailable || !isBookingEnabled}>
+              Create Booking
             </button>
           </div>
         </div>
